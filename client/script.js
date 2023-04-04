@@ -36,24 +36,23 @@ function generateUniqueId() {
     const randomNumber = Math.random();
     const hexadecimalString = randomNumber.toString(16);
 
-    return `id-$(timestamp)-$(hexadecimalString)`;
+    return `id-${timestamp}-${hexadecimalString}`;
 }
 
 function chatStripe (isAi, value, uniqueId) {
-    return (
-        `
-            <div class="wrapper ${isAi && 'ai'}">
+    return `
+            <div class="wrapper ${isAi && "ai"}">
                 <div class="chat">
                     <div class="profile">
                         <img
-                            scr="${isAi ? bot : user }"
-                            alt="${isAi ? 'bot' : 'user'}"
+                            scr="${isAi ? bot : user}"
+                            alt="${isAi ? "bot" : "user"}"/>
+                            
                     </div>
-                    <div class="message" id=${uniqueId}>${value}></div>
+                    <div class="message" id=${uniqueId}>${value}</div>
                 </div>
             </div>
-        `
-    )
+        `;
 }
 
 const handleSubmit = async (e) => {
@@ -77,18 +76,18 @@ const handleSubmit = async (e) => {
     loader(messageDiv);
 
     // fetch data from server -> bot's response
-    const response = await fetch('http://localhost:5000', [{
+    const response = await fetch('http://localhost:5000', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            prompt: data.get('prompt')
-        })
-    }]);
+            prompt: data.get('prompt'),
+        }),
+    });
 
     clearInterval(loadInterval);
-    messageDiv.innerHTML = '';
+    messageDiv.innerHTML = "";
 
     if(response.ok) {
         const data = await response.json();
@@ -102,7 +101,7 @@ const handleSubmit = async (e) => {
 
         alert(err);
     }
-}
+};
 
 form.addEventListener('submit', handleSubmit);
 form.addEventListener('keyup', (e) => {

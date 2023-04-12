@@ -35,24 +35,18 @@ function generateUniqueId() {
   const randomNumber = Math.random();
   const hexadecimalString = randomNumber.toString(16);
 
-  return `id-${timestamp}-${hexadecimalString}`;
+    return `id-${timestamp}-${hexadecimalString}`;
 }
 
-function chatStripe(isAi, value, uniqueId) {
-  return `
+function chatStripe (isAi, value, uniqueId) {
+    return `
             <div class="wrapper ${isAi && "ai"}">
                 <div class="chat">
                     <div class="profile">
                         <img
-            src="${isAi ? "./assets/nevtik.png" : "./assets/user.svg"}"
-            alt="${isAi ? "bot" : "user"}"
-          />
-                            
-                    </div>
-                    <div class="message" id=${uniqueId}>${value}</div>
                 </div>
             </div>
-        `;
+            `
 }
 
 const handleSubmit = async (e) => {
@@ -75,7 +69,6 @@ const handleSubmit = async (e) => {
 
   loader(messageDiv);
 
-  // fetch data from server -> bot's response
   const response = await fetch("http://localhost:5000", {
     method: "POST",
     headers: {
@@ -89,21 +82,6 @@ const handleSubmit = async (e) => {
   clearInterval(loadInterval);
   messageDiv.innerHTML = "";
 
-  if (response.ok) {
-    const data = await response.json();
-    const parsedData = data.bot.trim();
-
-    typeText(messageDiv, parsedData);
-  } else {
-    const err = await response.text();
-
-    messageDiv.innerHTML = "Something went wrong";
-
-    alert(err);
-  }
-};
-
-form.addEventListener("submit", handleSubmit);
 form.addEventListener("keyup", (e) => {
   if (e.keyCode === 13) {
     handleSubmit(e);

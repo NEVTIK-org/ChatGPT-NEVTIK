@@ -43,7 +43,7 @@ function chatStripe(isAi, value, uniqueId) {
             <div class="wrapper ${isAi && "ai"}">
                 <div class="chat">
                     <div class="profile">
-                         <img
+                        <img
             src="${isAi ? "./assets/nevtik.png" : "./assets/user.svg"}"
             alt="${isAi ? "bot" : "user"}"
           />
@@ -104,6 +104,22 @@ const handleSubmit = async (e) => {
 };
 
 form.addEventListener("submit", handleSubmit);
+form.addEventListener("keyup", (e) => {
+  if (e.keyCode === 13) {
+    handleSubmit(e);
+  }
+});
+
+window.addEventListener("load", () => {
+  const center = document.querySelector(".center");
+
+  center.classList.add("center-hidden");
+
+  center.addEventListener("transitioned", () => {
+    document.body.removeChild("center");
+  });
+});
+
 form.addEventListener("keyup", (e) => {
   if (e.keyCode === 13) {
     handleSubmit(e);
